@@ -5,7 +5,7 @@ import {
   Bell, MapPin, Circle, Bike, User, Landmark, Home, Wallet,
   ClipboardList, BarChart2, Pencil, Star, Camera,
   Shield, Clock, CheckCircle, AlertTriangle, X,
-  CreditCard, Phone, Mail, Facebook, Instagram, MessageCircle,
+  CreditCard, Phone, Mail, MessageCircle,
   FileText, Lock, HelpCircle, Info, LogOut, RefreshCcw,
   ChevronRight, ChevronDown, ChevronUp, Ban,
   Languages, Settings,

@@ -765,7 +765,7 @@ export function RideTracker({
   const destLng = status === "in_progress" ? (ride?.dropLng ?? null) : (ride?.pickupLng ?? null);
   const destLabel = status === "in_progress" ? (ride?.dropAddress ?? "Drop-off") : (ride?.pickupAddress ?? "Pickup");
 
-  const vehiclePlate = ride?.bids?.find((b: any) => b.vehiclePlate)?.vehiclePlate ?? null;
+  const vehiclePlate = String((ride?.bids?.find((b: any) => b.vehiclePlate)?.vehiclePlate) ?? "");
   const completedColor = hdrCfg.color;
 
   return (

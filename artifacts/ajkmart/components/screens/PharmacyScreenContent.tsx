@@ -427,7 +427,7 @@ function PharmacyScreenInner() {
         ...(prescriptionRefId ? { prescriptionPhotoUri: prescriptionRefId } : {}),
       } as Parameters<typeof createPharmacyOrder>[0] & { prescriptionPhotoUri?: string });
       if (payMethod === "wallet" && user) {
-        const serverTotal = typeof data.total === "number" ? data.total : parseFloat(data.total);
+        const serverTotal = typeof data.total === "number" ? data.total : parseFloat(String(data.total));
         updateUser({ walletBalance: (user?.walletBalance ?? 0) - (Number.isFinite(serverTotal) ? serverTotal : cartTotal) });
       }
       setConfirmedOrderId(data.id);

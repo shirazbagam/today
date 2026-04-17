@@ -9,6 +9,7 @@ export interface CartItem {
   name: string;
   price: number;
   quantity: number;
+  available?: boolean;
   image?: string;
   type: "mart" | "food" | "pharmacy";
 }

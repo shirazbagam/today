@@ -72,7 +72,6 @@ export default function CategoriesBrowseScreen() {
   const { data: productsData, isLoading: productsLoading } = useGetProducts({
     type: productType,
     category: subFilter ?? selectedId ?? undefined,
-    sort: sortBy,
   });
 
   const products = productsData?.products ?? [];

@@ -1147,7 +1147,7 @@ function OrdersScreenInner() {
 
   const { data: ordersData, isLoading: ordersLoading, refetch: refetchOrders } = useGetOrders(
     { userId: user?.id || "" },
-    { query: { enabled: !!user?.id && anyMartFood, refetchInterval: pollInterval } }
+    { query: { enabled: !!user?.id && anyMartFood, refetchInterval: pollInterval, queryKey: ["getOrders", user?.id] as const } }
   );
 
   const [ridesData, setRidesData] = useState<any>(null);

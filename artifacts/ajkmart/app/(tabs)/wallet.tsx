@@ -31,7 +31,7 @@ import { usePlatformConfig } from "@/context/PlatformConfigContext";
 import { useLanguage } from "@/context/LanguageContext";
 import { tDual } from "@workspace/i18n";
 import { SmartRefresh } from "@/components/ui/SmartRefresh";
-import { useGetWallet, getGetWalletQueryKey } from "@workspace/api-client-react";
+import { useGetWallet, type WalletResponse } from "@workspace/api-client-react";
 import { API_BASE as API, unwrapApiResponse } from "@/utils/api";
 import { AuthGateSheet } from "@/components/AuthGateSheet";
 
@@ -1497,12 +1497,10 @@ function WalletScreenInner() {
   const [socketBalance, setSocketBalance] = useState<number | null>(null);
   const prevUserBalanceRef = useRef<number | undefined>(user?.walletBalance);
 
-  const { data, isLoading, isFetching, isError: walletError, error: walletErrorObj, refetch } = useGetWallet(
+  const { data, isLoading, isFetching, isError: walletError, error: walletErrorObj, refetch, queryKey: walletQueryKey } = useGetWallet(
     { userId: user?.id || "" },
-    { query: { enabled: !!user?.id, retry: 2, retryDelay: (attempt: number) => Math.floor(1500 * Math.pow(1.5, attempt - 1)) } }
+    { query: { enabled: !!user?.id, retry: 2, retryDelay: (attempt: number) => Math.floor(1500 * Math.pow(1.5, attempt - 1)), queryKey: ["getWallet", user?.id] as const } }
   );
-
-  const walletQueryKey = getGetWalletQueryKey({ userId: user?.id || "" });
   const queryState = qc.getQueryState(walletQueryKey);
   const dataUpdatedAt = queryState?.dataUpdatedAt;
   const prevDataUpdatedAtRef = useRef<number | undefined>(undefined);
@@ -1558,8 +1556,8 @@ function WalletScreenInner() {
 
   useEffect(() => {
     if (data) {
-      if (typeof data.pinSetup === "boolean") setPinSetup(data.pinSetup);
-      if (typeof data.walletHidden === "boolean") setWalletHidden(data.walletHidden);
+      if (typeof (data as WalletResponse).pinSetup === "boolean") setPinSetup((data as WalletResponse).pinSetup);
+      if (typeof (data as WalletResponse).walletHidden === "boolean") setWalletHidden((data as WalletResponse).walletHidden);
     }
   }, [data]);
 

@@ -12,4 +12,5 @@ export type GetCategoriesType =
 export const GetCategoriesType = {
   mart: "mart",
   food: "food",
+  pharmacy: "pharmacy",
 } as const;

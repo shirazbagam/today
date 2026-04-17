@@ -28,7 +28,7 @@ const tasks = [
   {
     name: "api-server",
     dir: "artifacts/api-server",
-    env: { PORT: "3000" },
+    env: { PORT: "3000", NODE_ENV: "development" },
     healthCheck: "http://127.0.0.1:3000/api/healthz",
   },
   {

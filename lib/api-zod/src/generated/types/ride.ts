@@ -5,6 +5,7 @@
  * AJKMart Super App API
  * OpenAPI spec version: 0.1.0
  */
+import type { RideBidsItem } from "./rideBidsItem";
 import type { RidePaymentMethod } from "./ridePaymentMethod";
 import type { RideStatus } from "./rideStatus";
 import type { RideType } from "./rideType";
@@ -25,6 +26,10 @@ export interface Ride {
   riderId?: string;
   riderName?: string;
   riderPhone?: string;
+  riderLat?: number;
+  riderLng?: number;
+  riderLocAge?: number;
+  bids?: RideBidsItem[];
   paymentMethod: RidePaymentMethod;
   createdAt: string;
 }

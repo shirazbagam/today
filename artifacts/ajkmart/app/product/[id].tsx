@@ -422,10 +422,10 @@ function ProductDetailScreenInner() {
     setWishlistLoading(false);
   }, [isLoggedIn, id, isInWishlist, wishlistLoading, queryClient]);
 
-  const productType = product?.type || "mart";
+  const productType = (product?.type || "mart") as "mart" | "food" | "pharmacy";
   const { data: relatedData } = useGetProducts(
     { type: productType, category: product?.category },
-    { query: { enabled: !!product } }
+    { query: { enabled: !!product, queryKey: ["getProducts", productType, product?.category] as const } }
   );
   const relatedProducts = (relatedData?.products || [])
     .filter((p: Product) => p.id !== id)

@@ -218,8 +218,8 @@ export function RideTracker({
   }, [ride?.status, acceptedAt]);
 
   useEffect(() => {
-    if (ride?.status === "arrived" && (ride as any)?.tripOtp && !tripOtp) setTripOtp((ride as any).tripOtp);
-    if (ride?.status === "in_transit" && (ride as any)?.otpVerified) setTripOtp(null);
+    if (ride?.status === "confirmed" && (ride as any)?.tripOtp && !tripOtp) setTripOtp((ride as any).tripOtp);
+    if (ride?.status === "in_progress" && (ride as any)?.otpVerified) setTripOtp(null);
   }, [ride?.status, (ride as any)?.tripOtp, (ride as any)?.otpVerified]);
 
   useEffect(() => {
@@ -761,9 +761,9 @@ export function RideTracker({
   const isLive = riderLivePos != null;
   const stale = !isLive && ride?.riderLocAge != null && ride.riderLocAge > 90;
 
-  const destLat = status === "in_transit" ? (ride?.dropLat ?? null) : (ride?.pickupLat ?? null);
-  const destLng = status === "in_transit" ? (ride?.dropLng ?? null) : (ride?.pickupLng ?? null);
-  const destLabel = status === "in_transit" ? (ride?.dropAddress ?? "Drop-off") : (ride?.pickupAddress ?? "Pickup");
+  const destLat = status === "in_progress" ? (ride?.dropLat ?? null) : (ride?.pickupLat ?? null);
+  const destLng = status === "in_progress" ? (ride?.dropLng ?? null) : (ride?.pickupLng ?? null);
+  const destLabel = status === "in_progress" ? (ride?.dropAddress ?? "Drop-off") : (ride?.pickupAddress ?? "Pickup");
 
   const vehiclePlate = ride?.bids?.find((b: any) => b.vehiclePlate)?.vehiclePlate ?? null;
   const completedColor = hdrCfg.color;

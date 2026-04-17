@@ -5,6 +5,7 @@
  * AJKMart Super App API
  * OpenAPI spec version: 0.1.0
  */
+import type { ProductReviewsSummary } from "./productReviewsSummary";
 import type { ProductType } from "./productType";
 
 export interface Product {
@@ -20,6 +21,7 @@ export interface Product {
   vendorName?: string;
   rating?: number;
   reviewCount?: number;
+  reviewsSummary?: ProductReviewsSummary;
   inStock: boolean;
   unit?: string;
   deliveryTime?: string;

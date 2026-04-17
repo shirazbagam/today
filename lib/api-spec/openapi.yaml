@@ -129,7 +129,7 @@ paths:
           in: query
           schema:
             type: string
-            enum: [mart, food]
+            enum: [mart, food, pharmacy]
       responses:
         "200":
           description: Product list
@@ -694,7 +694,7 @@ paths:
           in: query
           schema:
             type: string
-            enum: [mart, food]
+            enum: [mart, food, pharmacy]
       responses:
         "200":
           description: Category list
@@ -801,7 +801,7 @@ components:
           type: string
         type:
           type: string
-          enum: [mart, food]
+          enum: [mart, food, pharmacy]
         image:
           type: string
         vendorId:
@@ -812,6 +812,8 @@ components:
           type: number
         reviewCount:
           type: number
+        reviewsSummary:
+          type: object
         inStock:
           type: boolean
         unit:
@@ -1164,6 +1166,10 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/WalletTransaction"
+        pinSetup:
+          type: boolean
+        walletHidden:
+          type: boolean
       required: [balance, transactions]
 
     TopUpRequest:
@@ -1210,6 +1216,16 @@ components:
           type: string
         riderPhone:
           type: string
+        riderLat:
+          type: number
+        riderLng:
+          type: number
+        riderLocAge:
+          type: number
+        bids:
+          type: array
+          items:
+            type: object
         paymentMethod:
           type: string
           enum: [cash, wallet]

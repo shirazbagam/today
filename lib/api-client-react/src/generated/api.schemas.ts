@@ -41,9 +41,6 @@ export interface User {
   avatar?: string;
   walletBalance: number;
   isActive: boolean;
-  phoneVerified: boolean;
-  emailVerified: boolean;
-  provider?: string;
   createdAt: string;
 }
 
@@ -64,7 +61,10 @@ export type ProductType = (typeof ProductType)[keyof typeof ProductType];
 export const ProductType = {
   mart: "mart",
   food: "food",
+  pharmacy: "pharmacy",
 } as const;
+
+export type ProductReviewsSummary = { [key: string]: unknown };
 
 export interface Product {
   id: string;
@@ -79,6 +79,7 @@ export interface Product {
   vendorName?: string;
   rating?: number;
   reviewCount?: number;
+  reviewsSummary?: ProductReviewsSummary;
   inStock: boolean;
   unit?: string;
   deliveryTime?: string;
@@ -274,7 +275,6 @@ export type CreateParcelBookingRequestPaymentMethod =
 export const CreateParcelBookingRequestPaymentMethod = {
   cash: "cash",
   wallet: "wallet",
-  cod: "cod",
 } as const;
 
 export interface CreateParcelBookingRequest {
@@ -288,10 +288,6 @@ export interface CreateParcelBookingRequest {
   weight?: number;
   description?: string;
   paymentMethod: CreateParcelBookingRequestPaymentMethod;
-  pickupLat?: number;
-  pickupLng?: number;
-  dropLat?: number;
-  dropLng?: number;
 }
 
 export interface PaymentMethod {
@@ -340,14 +336,14 @@ export interface WalletTransaction {
   type: WalletTransactionType;
   amount: number;
   description: string;
-  reference?: string;
-  paymentMethod?: string;
   createdAt: string;
 }
 
 export interface WalletResponse {
   balance: number;
   transactions: WalletTransaction[];
+  pinSetup?: boolean;
+  walletHidden?: boolean;
 }
 
 export interface TopUpRequest {
@@ -371,6 +367,8 @@ export const RideStatus = {
   completed: "completed",
   cancelled: "cancelled",
 } as const;
+
+export type RideBidsItem = { [key: string]: unknown };
 
 export type RidePaymentMethod =
   (typeof RidePaymentMethod)[keyof typeof RidePaymentMethod];
@@ -396,6 +394,10 @@ export interface Ride {
   riderId?: string;
   riderName?: string;
   riderPhone?: string;
+  riderLat?: number;
+  riderLng?: number;
+  riderLocAge?: number;
+  bids?: RideBidsItem[];
   paymentMethod: RidePaymentMethod;
   createdAt: string;
 }
@@ -588,6 +590,7 @@ export type GetProductsType =
 export const GetProductsType = {
   mart: "mart",
   food: "food",
+  pharmacy: "pharmacy",
 } as const;
 
 export type GetOrdersParams = {
@@ -648,4 +651,5 @@ export type GetCategoriesType =
 export const GetCategoriesType = {
   mart: "mart",
   food: "food",
+  pharmacy: "pharmacy",
 } as const;

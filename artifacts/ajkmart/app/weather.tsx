@@ -716,7 +716,9 @@ const s = StyleSheet.create({
     fontSize: 80,
     color: "#fff",
     lineHeight: 90,
-    textShadow: "0px 2px 8px rgba(0,0,0,0.15)",
+    textShadowColor: "rgba(0,0,0,0.15)",
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 8,
   },
   heroCondRow: {
     flexDirection: "row",

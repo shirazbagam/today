@@ -1347,7 +1347,7 @@ function CartScreenInner() {
                 }}
                 style={{ backgroundColor: gwColor, borderRadius: 14, paddingVertical: 14, paddingHorizontal: 32, width: "100%", alignItems: "center" }}
               >
-                <Text style={{ ...Typ.buttonMedium, color: C.textInverse }}>{T("resumePayment" as TranslationKey)}</Text>
+                <Text style={{ ...Typ.button, color: C.textInverse }}>{T("resumePayment" as TranslationKey)}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
@@ -1387,7 +1387,7 @@ function CartScreenInner() {
   if (pendingAck && ackStuck && !orderSuccess) {
     return (
       <View style={[styles.container, { backgroundColor: C.background, justifyContent: "center", alignItems: "center", padding: 32 }]}>
-        <View style={{ width: 64, height: 64, borderRadius: 32, backgroundColor: C.warnBg ?? "#FFF3E0", alignItems: "center", justifyContent: "center", marginBottom: 16 }}>
+        <View style={{ width: 64, height: 64, borderRadius: 32, backgroundColor: C.warningSoft ?? "#FFF3E0", alignItems: "center", justifyContent: "center", marginBottom: 16 }}>
           <Ionicons name="time-outline" size={32} color={C.gold ?? "#F59E0B"} />
         </View>
         <Text style={{ ...Typ.title, color: C.text, textAlign: "center", marginBottom: 8 }}>{T("orderConfirmDelayed" as TranslationKey)}</Text>
@@ -1399,7 +1399,7 @@ function CartScreenInner() {
           onPress={() => { dismissAck(); router.push("/(tabs)/orders"); }}
           style={{ backgroundColor: C.primary, borderRadius: 14, paddingVertical: 14, paddingHorizontal: 32, width: "100%", alignItems: "center", marginBottom: 12 }}
         >
-          <Text style={{ ...Typ.buttonMedium, color: C.textInverse }}>{T("checkMyOrders" as TranslationKey)}</Text>
+          <Text style={{ ...Typ.button, color: C.textInverse }}>{T("checkMyOrders" as TranslationKey)}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.8}

@@ -1556,8 +1556,8 @@ function WalletScreenInner() {
 
   useEffect(() => {
     if (data) {
-      if (typeof (data as WalletResponse).pinSetup === "boolean") setPinSetup((data as WalletResponse).pinSetup);
-      if (typeof (data as WalletResponse).walletHidden === "boolean") setWalletHidden((data as WalletResponse).walletHidden);
+      if (typeof (data as WalletResponse).pinSetup === "boolean") setPinSetup((data as WalletResponse).pinSetup as boolean);
+      if (typeof (data as WalletResponse).walletHidden === "boolean") setWalletHidden((data as WalletResponse).walletHidden as boolean);
     }
   }, [data]);
 

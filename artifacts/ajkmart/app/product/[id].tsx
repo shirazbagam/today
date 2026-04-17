@@ -594,8 +594,8 @@ function ProductDetailScreenInner() {
 
   const reviewsSummary = product?.reviewsSummary;
   const summary = {
-    average: reviewsSummary?.average ?? 0,
-    total: reviewsSummary?.total ?? 0,
+    average: Number(reviewsSummary?.average) || 0,
+    total: Number(reviewsSummary?.total) || 0,
     distribution: reviewsSummary?.breakdown ?? { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
   };
   const reviews: ProductReview[] = reviewsData?.reviews || [];
@@ -880,10 +880,10 @@ function ProductDetailScreenInner() {
               ) : null}
             </View>
 
-            {summary.total > 0 && (
+            {+summary.total > 0 && (
               <View style={styles.ratingOverview}>
                 <View style={styles.ratingBig}>
-                  <Text style={styles.ratingBigNum}>{summary.average.toFixed(1)}</Text>
+                  <Text style={styles.ratingBigNum}>{(+summary.average).toFixed(1)}</Text>
                   <StarRating rating={summary.average} size={18} />
                   <Text style={styles.ratingBigSub}>
                     {summary.total} review{summary.total !== 1 ? "s" : ""}
@@ -891,7 +891,7 @@ function ProductDetailScreenInner() {
                 </View>
                 <View style={styles.ratingBars}>
                   {[5, 4, 3, 2, 1].map(star => {
-                    const count = summary.distribution[star] || 0;
+                    const count = (summary.distribution as Record<number, number>)[star] || 0;
                     const pct = Math.round((count / summary.total) * 100);
                     return (
                       <View key={star} style={styles.ratingBarRow}>

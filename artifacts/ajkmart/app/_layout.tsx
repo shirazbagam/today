@@ -126,14 +126,14 @@ const GUEST_BROWSABLE = new Set([
 
 function AuthGuard() {
   const { user, isLoading } = useAuth();
-  const segments = useSegments();
+  const segments: string[] = useSegments();
 
   useEffect(() => {
     if (isLoading) return;
     const inAuthGroup = segments[0] === "auth";
     const inTabsGroup = segments[0] === "(tabs)";
     const inRootIndex = (segments as string[]).length === 0;
-    const isBrowsable = GUEST_BROWSABLE.has(segments[0] as string);
+    const isBrowsable = GUEST_BROWSABLE.has(segments[0]);
 
     const isPublicRoute = inAuthGroup || inTabsGroup || inRootIndex || isBrowsable;
     const onWrongAppScreen = segments[0] === "auth" && segments[1] === "wrong-app";

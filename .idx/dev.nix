@@ -7,7 +7,7 @@
 
   packages = [
     pkgs.nodejs_22
-    pkgs.nodePackages.pnpm
+    pkgs.pnpm
     pkgs.postgresql_16
   ];
 
@@ -15,16 +15,16 @@
 
   idx = {
     extensions = [
-      "dbaeumer.vscode-eslint",
-      "esbenp.prettier-vscode",
-      "bradlc.vscode-tailwindcss",
-      "Prisma.prisma",
+      "dbaeumer.vscode-eslint"
+      "esbenp.prettier-vscode"
+      "bradlc.vscode-tailwindcss"
+      "Prisma.prisma"
       "ms-azuretools.vscode-docker"
     ];
 
     workspace = {
       onCreate = {
-        install = "pnpm install";
+        install = "pnpm install --no-frozen-lockfile";
         setup-env = "cp .env.example .env && echo 'Edit .env with your DATABASE_URL then run: pnpm --filter @workspace/db run migrate'";
       };
 

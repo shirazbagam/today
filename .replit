@@ -1,0 +1,110 @@
+modules = ["nodejs-24", "postgresql-16"]
+
+[[artifacts]]
+id = "artifacts/api-server"
+
+[[artifacts]]
+id = "artifacts/mockup-sandbox"
+
+[deployment]
+router = "application"
+deploymentTarget = "autoscale"
+
+[deployment.postBuild]
+args = ["pnpm", "store", "prune"]
+env = { "CI" = "true" }
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "artifacts/admin: web"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "artifacts/ajkmart: expo"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "artifacts/rider-app: web"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "artifacts/vendor-app: web"
+
+[[workflows.workflow]]
+name = "artifacts/admin: web"
+author = "agent"
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PORT=3000 pnpm --filter @workspace/admin run dev"
+waitForPort = 3000
+
+[[workflows.workflow]]
+name = "artifacts/ajkmart: expo"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "pnpm --filter @workspace/ajkmart run dev:web"
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[workflows.workflow]]
+name = "artifacts/rider-app: web"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PORT=3002 pnpm --filter @workspace/rider-app run dev"
+waitForPort = 3002
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[workflows.workflow]]
+name = "artifacts/vendor-app: web"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PORT=3001 pnpm --filter @workspace/vendor-app run dev"
+waitForPort = 3001
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[agent]
+stack = "PNPM_WORKSPACE"
+expertMode = true
+
+[postMerge]
+path = "scripts/post-merge.sh"
+timeoutMs = 60000
+
+[nix]
+channel = "stable-25_05"
+
+[userenv]
+
+[userenv.shared]
+ADMIN_SECRET = "Khan@123.com"
+ADMIN_JWT_SECRET = "QOHAcA0Y3m6yyQ1jW8FnQu995T5e8XupSnhKch6SF8RIKFn5KNZatDnFzqUDX2OL"
+VAPID_PUBLIC_KEY = "BEmlZZIGCb7ZhembOoH02qzZlnhkFrYkib27NwFgtXBFDcvtHhhWC2hfZEHU4JpDbfHIRgbrCiM_f9gEEc_JHLg"
+VAPID_PRIVATE_KEY = "b3egnGyDJYSVsOB4z-PGhf5YbGeuVKcHtNpJPQ-r-eM"
+VAPID_CONTACT_EMAIL = "mailto:admin@ajkmart.app"
+JWT_SECRET = "d44f9d41bbc11954b0d33de7336f6052cd8a365f8014aea3c0289c51413348b50b30aff2df4c9c388a48e20b1639c7ef"
+LOG_LEVEL = "info"
+APP_BASE_URL = "https://434f9cc9-f518-4250-8611-0e1c60a93c2f-00-byr0xn2l59jr.pike.replit.dev"
+ADMIN_USERNAME = "admin"

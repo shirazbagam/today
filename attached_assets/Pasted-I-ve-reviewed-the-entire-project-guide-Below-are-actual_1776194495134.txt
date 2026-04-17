@@ -1,0 +1,44 @@
+I’ve reviewed the entire project guide. Below are actual mistakes, inconsistencies, and design issues that could cause problems during development.
+
+1. Database Schema – Critical Design Flaw
+
+Mistake:
+users, riders, and vendors are separate tables with no relationship to a common auth table.
+
+A person cannot be both a customer and a rider/vendor.
+
+Authentication (login) would need to check three different tables.
+
+Wallet, notifications, and addresses would be duplicated across tables.
+
+Fix:
+Use a single users table with a role column (customer, rider, vendor, admin).
+Then create rider_profiles, vendor_profiles linked via user_id.
+
+ts
+
+users (id, phone, password, role, name, wallet_balance, created_at) rider_profiles (user_id, vehicle_type, is_online, current_location, total_earnings) vendor_profiles (user_id, store_name, location, balance)
+
+2. Missing Tables / Columns
+
+No customer_wallet or user_wallet – only wallet_transactions.
+Add: users.wallet_balance or a separate wallets table.
+
+No refresh_tokens table for secure auth sessions.
+
+No order_status_history – you can’t track when an order moved from “confirmed” to “preparing”.
+
+riders table has wallet but no completed_orders_count or rating.
+
+3. API Routes – Inconsistencies & Missing Endpoints
+
+IssueLocationSuggestion/api/admin/withdrawals listed in admin/finance.ts but not as a separate fileAdmin routesEither merge or create separate file.No endpoint for vendors to update order status (preparing, ready)vendor.tsAdd PATCH /api/vendor/orders/:id/statusNo endpoint for riders to mark delivery as delivered or failedrider.tsAdd POST /api/rider/orders/:id/completeNo refund APIMissingAdd POST /api/orders/:id/refund (admin only)Missing dispute / support ticket endpointsMissingAdd /api/support/tickets
+
+4. Real-time Events – Incomplete
+
+Missing essential events:
+
+EventShould be sent whenorder:statusVendor changes order status (preparing → ready)order:out_for_deliveryRider picks up orderorder:deliveredRider completes deliveryrider:arrivedRider reaches pickup locationride:started / ride:completedRide begins / endsnotification:newAny new push notification
+
+Also, rider:location should only be sent to the customer who has an active order/ride with that rider – not all admins/riders. The guide doesn’t mention filtering.
+

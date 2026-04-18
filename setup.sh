@@ -23,15 +23,21 @@ fi
 
 # 3. SECURE ENVIRONMENT CONFIGURATION
 echo "📄 Setting up Secure Environment (.env)..."
-cp .env.example .env
+cp .env.example .env 2>/dev/null || touch .env
 
-# Common Inputs for both modes
+# VISIBILITY OPTION
+read -p "👁️ Show password while typing? (y/n): " show_pass
+
 read -p "👤 Enter ADMIN_USERNAME: " admin_user
-read -s -p "🔑 Enter ADMIN_SECRET: " admin_sec
-echo ""
+
+if [ "$show_pass" == "y" ]; then
+    read -p "🔑 Enter ADMIN_SECRET: " admin_sec
+else
+    read -s -p "🔑 Enter ADMIN_SECRET (Hidden): " admin_sec
+    echo ""
+fi
 
 if [ "$mode" == "2" ]; then
-    # Production: Pooch kar set karega
     read -p "🔗 Enter PRODUCTION DATABASE_URL: " db_url
     read -p "🔐 Enter JWT_SECRET (Strong string): " jwt_sec
     
@@ -39,8 +45,8 @@ if [ "$mode" == "2" ]; then
     sed -i "s|JWT_SECRET=.*|JWT_SECRET=$jwt_sec|g" .env
     sed -i "s|NODE_ENV=.*|NODE_ENV=production|g" .env
 else
-    # Test: Realistic Random Keys
     jwt_sec="test_secret_$(date +%s)"
+    # Default local test DB agar user kuch na de
     sed -i "s|DATABASE_URL=.*|DATABASE_URL=postgres://localhost/ajkmart_test|g" .env
     sed -i "s|JWT_SECRET=.*|JWT_SECRET=$jwt_sec|g" .env
     sed -i "s|NODE_ENV=.*|NODE_ENV=development|g" .env

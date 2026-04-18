@@ -4,11 +4,14 @@
   "license": "MIT",
   "scripts": {
     "preinstall": "sh -c 'rm -f package-lock.json yarn.lock; case \"$npm_config_user_agent\" in pnpm/*) ;; *) echo \"Use pnpm instead\" >&2; exit 1 ;; esac'",
+    "setup": "pnpm install && cp .env.example .env && echo '✅ Setup complete! Run individual services using commands below'",
+    "db:migrate": "cd artifacts/api-server && pnpm run build",
+    "api:dev": "pnpm --filter @workspace/api-server run dev",
+    "admin:dev": "pnpm --filter @workspace/admin run dev",
+    "rider:dev": "pnpm --filter @workspace/rider-app run dev",
+    "vendor:dev": "pnpm --filter @workspace/vendor-app run dev",
+    "ajkmart:dev": "pnpm --filter @workspace/ajkmart run dev:web",
     "build": "pnpm run typecheck && pnpm -r --if-present run build",
-    "dev": "node ./scripts/dev-all.mjs",
-    "dev:no-mockup": "DISABLE_MOCKUP_SANDBOX=1 node ./scripts/dev-all.mjs",
-    "dev:ajkmart": "node ./scripts/dev-ajkmart.mjs",
-    "dev:customer": "pnpm run dev:ajkmart",
     "typecheck:libs": "tsc --build",
     "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck"
   },
